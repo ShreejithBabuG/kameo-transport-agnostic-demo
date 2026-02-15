@@ -1,0 +1,14 @@
+[package]
+name = "ping-cli-client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ping-common = { path = "../ping-common", features = ["actor"] }
+kameo = { version = "0.19", features = ["remote"] }
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+libp2p = "0.56"
+futures = "0.3"
+clap = { version = "4", features = ["derive"] }

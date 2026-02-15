@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kameo Wasm Ping Client</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 5px; cursor: pointer; }
+        #output { background: #f4f4f4; padding: 15px; border-radius: 5px; height: 400px; overflow-y: auto; font-family: monospace; }
+        .highlight { background: #ffffcc; padding: 10px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1> Kameo WebAssembly Ping Client</h1>
+    
+    <div class="highlight">
+        <strong> Architecture Proof:</strong><br>
+        This Wasm client uses the <strong>same Ping/Pong message format</strong> as the CLI client!<br>
+        The PingActor on the server handles messages from <strong>both TCP (CLI) and WebSocket (Browser)</strong> using identical code.
+    </div>
+    
+    <button id="connectBtn">Connect</button>
+    <button id="pingBtn" disabled>Send Ping</button>
+    <button id="ping10Btn" disabled>Send 10 Pings</button>
+    
+    <h3>Console Output:</h3>
+    <pre id="output"></pre>
+    
+    <script type="module">
+        import init, { WasmPingClient } from './ping_wasm_client.js';
+        
+        let client = null;
+        const output = document.getElementById('output');
+        
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            output.textContent += args.join(' ') + '\n';
+            output.scrollTop = output.scrollHeight;
+        };
+        
+        async function run() {
+            console.log('🔨 Loading WebAssembly module...');
+            await init();
+            console.log(' Wasm loaded successfully!');
+            console.log(' Ready to connect to Kameo server');
+        }
+        
+        document.getElementById('connectBtn').onclick = async () => {
+            try {
+                console.log('🔌 Connecting to ws://localhost:8080/ws...');
+                client = new WasmPingClient();
+                await new Promise(r => setTimeout(r, 500));
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('pingBtn').disabled = false;
+                document.getElementById('ping10Btn').disabled = false;
+            } catch (e) {
+                console.log(' Connection failed:', e);
+            }
+        };
+        
+        document.getElementById('pingBtn').onclick = () => {
+            if (client) {
+                try {
+                    client.send_ping();
+                } catch (e) {
+                    console.log(' Send failed:', e);
+                }
+            }
+        };
+        
+        document.getElementById('ping10Btn').onclick = async () => {
+            if (client) {
+                for (let i = 0; i < 10; i++) {
+                    try {
+                        client.send_ping();
+                        await new Promise(r => setTimeout(r, 500));
+                    } catch (e) {
+                        console.log(' Send failed:', e);
+                        break;
+                    }
+                }
+            }
+        };
+        
+        run();
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+[package]
+name = "ping-common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+# Optional for actor support
+kameo = { version = "0.19", features = ["remote"], optional = true }
+tokio = { version = "1", features = ["full"], optional = true }
+
+[features]
+default = []
+actor = ["kameo", "tokio"]

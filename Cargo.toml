@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+    "ping-common",
+    "ping-cli-client",
+    "ping-cli-server",
+    "ping-http-server",
+    "ping-wasm-client",
+]
