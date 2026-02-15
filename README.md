@@ -13,10 +13,10 @@ This project validates that actor-based message handling logic can be written on
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     ping-common                         │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │  Ping, Pong (message types)                      │  │
-│  │  PingActor (transport-agnostic business logic)   │  │
-│  └──────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  Ping, Pong (message types)                      │   │
+│  │  PingActor (transport-agnostic business logic)   │   │
+│  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
                           │
         ┌─────────────────┴─────────────────┐
