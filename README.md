@@ -232,3 +232,13 @@ The CLI components support WAN deployment:
 ```bash
    cargo run -p ping-cli-client -- --server "/ip4/PUBLIC_IP/tcp/36341/p2p/PEER_ID"
 ```
+## Conclusion
+
+This experiment suggests that Kameo's actor abstraction can remain transport-agnostic 
+across TCP/libp2p and WebSocket transports without modification to business logic.
+
+The primary adaptation required is at the transport boundary (serialization and message 
+bridging), not within the actor model itself.
+
+This supports the feasibility of using a shared actor layer across CLI and browser environments.
+
