@@ -43,7 +43,7 @@ This project validates that actor-based message handling logic can be written on
 
 ## Key Finding
 
-✅ **The same `PingActor` implementation handles messages from all transports without modification**
+ **The same `PingActor` implementation handles messages from all transports without modification**
 
 The actor's message handler remains identical whether processing messages from:
 - Browser JavaScript (WebSocket)
