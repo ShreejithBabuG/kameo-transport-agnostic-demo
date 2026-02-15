@@ -138,7 +138,7 @@ async fn handle_socket(mut socket: WebSocket, actor: SharedActor) {
                         info!("Received PING #{}", ping.sequence);
                         
                         // Forward to PingActor (same actor as CLI uses!)
-                        match actor.ask(&ping).await {
+                        match actor.ask(ping).await {
                             Ok(pong_reply) => {
                                 let pong = pong_reply.0;
                                 info!("Sending PONG #{}", pong.sequence);
